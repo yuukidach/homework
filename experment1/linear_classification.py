@@ -3,39 +3,27 @@
 import numpy as np
 from matplotlib import pyplot as plt 
 
-tmp = np.array([
-    [-2,4,-1],
-    [4,1,-1],
-    [1, 6, -1],
-    [2, 4, -1],
-    [6, 2, -1],
 
-])
-
-y = np.array([-1,-1,1,1,1])
-
-def perception(x, y):
-    w = np.zeros(x.shape[1])
-    eta = 1
-    epochs = 20
+def perception(x, y, eta, epochs):
+    w = np.ones(x.shape[1]+1)      # 加上常数项
 
     for t in range(epochs):
         for i, xi in enumerate(x):
+            xi = np.append(xi, 1)
             if (np.dot(xi, w)*y[i]) <= 0:
                 w = w + eta*xi*y[i]
 
     return w
 
 
-def perception_plt(x,y):
-    w = np.zeros(x.shape[1])
-    eta = 1
-    epochs = 20
+def perception_plt(x, y, eta, epochs):
+    w = np.ones(x.shape[1]+1)
     errs = []
 
     for t in range(epochs):
         total_err = 0
         for i, xi in enumerate(x):
+            xi = np.append(xi, 1)
             decision = np.dot(xi, w)*y[i]
             if decision <= 0:
                 w = w + eta*xi*y[i]
@@ -45,10 +33,8 @@ def perception_plt(x,y):
     plt.plot(errs)
     plt.xlabel('epoch')
     plt.ylabel('total loss')
+    plt.show()
     
     return w
 
-if __name__ == "__main__":
-    w = perception_plt(tmp, y)
-    print(w)
-    plt.show()
+

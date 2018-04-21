@@ -1,1 +1,4 @@
 .vscode/
+*.docx
+*.doc
+__pycache__/
